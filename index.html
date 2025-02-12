@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code - NLIMITED</title>
+    
+    <!-- Import de la police Orbitron (remplaçant Mitashi Complex) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Reset de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Style général */
+        body {
+            background-color: #000; /* Fond totalement noir */
+            color: #fff; /* Texte blanc */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Conteneur principal */
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Titre - NLIMITED */
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px; /* Augmenté pour espacer davantage */
+        }
+
+        /* QR Code - animation "respiration" */
+        .qr-container {
+            width: 205px;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111; /* Léger contraste */
+            padding: 15px 10px; /* Ajustement top/bottom équilibré */
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2); /* Effet de lumière */
+            margin: 0 auto 40px auto; /* Espacement deux fois plus grand */
+            
+            /* Animation */
+            animation: breathe 3s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        .qr-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Texte en dessous */
+        p {
+            font-size: 12px;
+            margin-top: 0; /* Suppression de la marge haute pour plus de cohérence */
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NLIMITED</h1>
+        <div class="qr-container">
+            <img src="https://quickchart.io/qr?text=9ZPTPLMT&size=500&format=png&ecLevel=H&margin=2&dark=FFFFFF&light=000000" alt="QR Code">
+        </div>
+        <p>Scannez ce code pour accéder à votre contenu exclusif</p>
+    </div>
+</body>
+</html>
