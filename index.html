@@ -53,27 +53,26 @@
     </div>
 
     <script>
+        const userId = "8STKKTET";  // <-- MODIFIE ICI l'ID du client
+
         async function loadQRData() {
-            const params = new URLSearchParams(window.location.search);
-            const userId = params.get("id");
+            try {
+                // URL de Google Apps Script avec paramètre ID
+                const url = `https://script.google.com/macros/s/AKfycbxCq7bD7LDcUtH75v7-tNuGXQSwLYRJenb3nmjH-FTYHIcApITtTa7PQSk4GMFYQa4t/exec?id=${userId}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
 
-            if (!userId) {
-                document.getElementById("brandName").innerText = "Aucun ID fourni";
-                return;
-            }
+                if (data.error) {
+                    document.getElementById("brandName").innerText = data.error;
+                    return;
+                }
 
-            // Charger les données depuis Google Apps Script (remplace par ton URL)
-            const response = await fetch("https://script.google.com/macros/s/AKfycbyGel44kkJzPkv5vkziIAOroIBQMeFZ6MgHAGWWMKOO-taVtuyfGwdLqIQQCk1TD707/exec");
-            const data = await response.json();
-
-            // Trouver l'entrée correspondant à l’ID
-            const clientData = data.find(client => client.id === userId);
-
-            if (clientData) {
-                document.getElementById("brandName").innerText = clientData.brand;
-                document.getElementById("qrImage").src = clientData.qr_code;
-            } else {
-                document.getElementById("brandName").innerText = "ID non trouvé";
+                // Met à jour les éléments HTML avec les données reçues
+                document.getElementById("brandName").innerText = data.brand;
+                document.getElementById("qrImage").src = data.qr_code;
+            } catch (error) {
+                document.getElementById("brandName").innerText = "Erreur de chargement";
             }
         }
 
