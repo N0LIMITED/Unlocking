@@ -29,7 +29,7 @@
             display: none; /* Caché au début */
         }
 
-        /* Conteneur du QR Code */
+        /* Conteneur du QR Code (sans animation au début) */
         .qr-container {
             width: 205px;
             height: 250px;
@@ -41,10 +41,15 @@
             border-radius: 10px;
             box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
             margin-bottom: 20px;
+            opacity: 0; /* Caché au début */
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Animation "breathing" activée après chargement */
+        .breathing {
             animation: breathe 3s infinite ease-in-out;
         }
 
-        /* Animation "breathing" */
         @keyframes breathe {
             0%, 100% {
                 transform: scale(1);
@@ -62,12 +67,11 @@
             display: none; /* Caché au début */
         }
 
-        /* Style du texte sous le QR Code */
+        /* Style du texte sous le QR Code (visible dès le début) */
         p {
             font-size: 14px;
             opacity: 0.8;
             margin-top: 10px;
-            display: none; /* Caché au début */
         }
 
         /* Animation de chargement */
@@ -99,15 +103,15 @@
     <h1 id="brandName"></h1>
 
     <!-- Conteneur du QR Code -->
-    <div class="qr-container">
+    <div class="qr-container" id="qrContainer">
         <div class="loading-container" id="loadingAnimation">
             <div class="loader"></div>
         </div>
         <img id="qrImage" src="" alt="QR Code">
     </div>
 
-    <!-- Texte sous le QR Code -->
-    <p id="qrText">Scannez ce code pour accéder à votre contenu exclusif</p>
+    <!-- Texte sous le QR Code (visible dès le début) -->
+    <p>Scannez ce code pour accéder à votre contenu exclusif</p>
 
     <script>
         const userId = "9ZPTPLMT";  // <-- MODIFIE ICI l'ID du client
@@ -115,7 +119,7 @@
         async function loadQRData() {
             try {
                 // URL de Google Apps Script avec paramètre ID
-                const url = `https://script.google.com/macros/s/AKfycbxCq7bD7LDcUtH75v7-tNuGXQSwLYRJenb3nmjH-FTYHIcApITtTa7PQSk4GMFYQa4t/exec?id=${userId}`;
+                const url = `https://script.google.com/macros/library/d/1LMQTKHOym-Tx6EfI8-SSjTlglrXoZo4BaIqrcVl7hBjYv5FhhwE0izyp/61?id=${userId}`;
                 
                 const response = await fetch(url);
                 const data = await response.json();
@@ -137,8 +141,14 @@
                 // Supprime l'animation de chargement
                 document.getElementById("loadingAnimation").style.display = "none";
 
-                // Affiche le texte sous le QR Code
-                document.getElementById("qrText").style.display = "block";
+                // Affiche le QR Code progressivement
+                const qrContainer = document.getElementById("qrContainer");
+                qrContainer.style.opacity = "1";
+
+                // Ajoute l'animation "breathing" après affichage
+                setTimeout(() => {
+                    qrContainer.classList.add("breathing");
+                }, 500);
 
             } catch (error) {
                 document.getElementById("brandName").innerText = "Erreur de chargement";
