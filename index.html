@@ -62,11 +62,12 @@
             display: none; /* Hidden initially */
         }
 
-        /* Text below QR Code (visible from the start) */
+        /* Text below QR Code (hidden initially) */
         p {
             font-size: 14px;
             opacity: 0.8;
             margin-top: 10px;
+            display: none; /* Hidden initially */
         }
 
         /* Loading animation */
@@ -105,8 +106,8 @@
         <img id="qrImage" src="" alt="QR Code">
     </div>
 
-    <!-- Text below QR Code (visible from start) -->
-    <p>Scan this code to access your exclusive content</p>
+    <!-- Text below QR Code (hidden initially) -->
+    <p id="qrText">Scan this code to access your exclusive content</p>
 
     <script>
         const userId = "9ZPTPLMT";  // <-- MODIFY THIS WITH THE CLIENT ID
@@ -138,6 +139,9 @@
 
                 // Add the breathing animation AFTER loading
                 document.getElementById("qrBox").style.animation = "breathe 3s infinite ease-in-out";
+
+                // Display the text under the QR Code
+                document.getElementById("qrText").style.display = "block";
 
             } catch (error) {
                 document.getElementById("brandName").innerText = "Loading error";
