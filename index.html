@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Page</title>
 
-    <!-- Import de la police futuriste -->
+    <!-- Import futuristic font -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
     <style>
@@ -21,15 +21,15 @@
             height: 100vh;
         }
 
-        /* Style du titre (caché au début) */
+        /* Title (hidden initially) */
         h1 {
             font-size: 32px;
             text-transform: uppercase;
             margin-bottom: 40px;
-            display: none; /* Caché au début */
+            display: none; /* Hidden initially */
         }
 
-        /* Conteneur du QR Code (sans animation au début) */
+        /* QR Code container (without animation at start) */
         .qr-container {
             width: 205px;
             height: 250px;
@@ -41,15 +41,10 @@
             border-radius: 10px;
             box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
             margin-bottom: 20px;
-            opacity: 0; /* Caché au début */
-            transition: opacity 0.5s ease-in-out;
+            transition: all 0.3s ease-in-out;
         }
 
-        /* Animation "breathing" activée après chargement */
-        .breathing {
-            animation: breathe 3s infinite ease-in-out;
-        }
-
+        /* Breathing animation (added dynamically after loading) */
         @keyframes breathe {
             0%, 100% {
                 transform: scale(1);
@@ -64,17 +59,17 @@
         .qr-container img {
             width: 100%;
             height: auto;
-            display: none; /* Caché au début */
+            display: none; /* Hidden initially */
         }
 
-        /* Style du texte sous le QR Code (visible dès le début) */
+        /* Text below QR Code (visible from the start) */
         p {
             font-size: 14px;
             opacity: 0.8;
             margin-top: 10px;
         }
 
-        /* Animation de chargement */
+        /* Loading animation */
         .loader {
             border: 4px solid rgba(255, 255, 255, 0.2);
             border-left-color: #ffffff;
@@ -89,7 +84,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Conteneur de chargement */
+        /* Loading container */
         .loading-container {
             display: flex;
             justify-content: center;
@@ -99,26 +94,26 @@
     </style>
 </head>
 <body>
-    <!-- Titre caché au début -->
+    <!-- Title (hidden initially) -->
     <h1 id="brandName"></h1>
 
-    <!-- Conteneur du QR Code -->
-    <div class="qr-container" id="qrContainer">
+    <!-- QR Code container (without animation at start) -->
+    <div class="qr-container" id="qrBox">
         <div class="loading-container" id="loadingAnimation">
             <div class="loader"></div>
         </div>
         <img id="qrImage" src="" alt="QR Code">
     </div>
 
-    <!-- Texte sous le QR Code (visible dès le début) -->
-    <p>Scannez ce code pour accéder à votre contenu exclusif</p>
+    <!-- Text below QR Code (visible from start) -->
+    <p>Scan this code to access your exclusive content</p>
 
     <script>
-        const userId = "9ZPTPLMT";  // <-- MODIFIE ICI l'ID du client
+        const userId = "9ZPTPLMT";  // <-- MODIFY THIS WITH THE CLIENT ID
 
         async function loadQRData() {
             try {
-                // URL de Google Apps Script avec paramètre ID
+                // Google Apps Script URL with ID parameter
                 const url = `https://script.google.com/macros/s/AKfycbxCq7bD7LDcUtH75v7-tNuGXQSwLYRJenb3nmjH-FTYHIcApITtTa7PQSk4GMFYQa4t/exec?id=${userId}`;
                 
                 const response = await fetch(url);
@@ -130,28 +125,22 @@
                     return;
                 }
 
-                // Met à jour le titre et l'affiche
+                // Update the title and show it
                 document.getElementById("brandName").innerText = data.brand;
                 document.getElementById("brandName").style.display = "block";
 
-                // Affiche l'image QR Code après chargement
+                // Display the QR Code image
                 document.getElementById("qrImage").src = data.qr_code;
                 document.getElementById("qrImage").style.display = "block";
 
-                // Supprime l'animation de chargement
+                // Remove the loading animation
                 document.getElementById("loadingAnimation").style.display = "none";
 
-                // Affiche le QR Code progressivement
-                const qrContainer = document.getElementById("qrContainer");
-                qrContainer.style.opacity = "1";
-
-                // Ajoute l'animation "breathing" après affichage
-                setTimeout(() => {
-                    qrContainer.classList.add("breathing");
-                }, 500);
+                // Add the breathing animation AFTER loading
+                document.getElementById("qrBox").style.animation = "breathe 3s infinite ease-in-out";
 
             } catch (error) {
-                document.getElementById("brandName").innerText = "Erreur de chargement";
+                document.getElementById("brandName").innerText = "Loading error";
                 document.getElementById("brandName").style.display = "block";
             }
         }
