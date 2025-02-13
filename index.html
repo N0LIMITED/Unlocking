@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Page</title>
 
-    <!-- Import de la police -->
+    <!-- Import de la police futuriste -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
     <style>
@@ -21,11 +21,12 @@
             height: 100vh;
         }
 
+        /* Style du titre (caché au début) */
         h1 {
             font-size: 32px;
             text-transform: uppercase;
             margin-bottom: 40px;
-            display: none; 
+            display: none; /* Caché au début */
         }
 
         /* Conteneur du QR Code (sans animation au début) */
@@ -40,7 +41,7 @@
             border-radius: 10px;
             box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
             margin-bottom: 20px;
-            opacity: 0; 
+            opacity: 0; /* Caché au début */
             transition: opacity 0.5s ease-in-out;
         }
 
@@ -63,7 +64,7 @@
         .qr-container img {
             width: 100%;
             height: auto;
-            display: none; 
+            display: none; /* Caché au début */
         }
 
         /* Style du texte sous le QR Code (visible dès le début) */
@@ -98,8 +99,10 @@
     </style>
 </head>
 <body>
+    <!-- Titre caché au début -->
     <h1 id="brandName"></h1>
 
+    <!-- Conteneur du QR Code -->
     <div class="qr-container" id="qrContainer">
         <div class="loading-container" id="loadingAnimation">
             <div class="loader"></div>
@@ -107,6 +110,7 @@
         <img id="qrImage" src="" alt="QR Code">
     </div>
 
+    <!-- Texte sous le QR Code (visible dès le début) -->
     <p>Scannez ce code pour accéder à votre contenu exclusif</p>
 
     <script>
@@ -114,6 +118,7 @@
 
         async function loadQRData() {
             try {
+                // URL de Google Apps Script avec paramètre ID
                 const url = `https://script.google.com/macros/library/d/1LMQTKHOym-Tx6EfI8-SSjTlglrXoZo4BaIqrcVl7hBjYv5FhhwE0izyp/61?id=${userId}`;
                 
                 const response = await fetch(url);
